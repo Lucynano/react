@@ -3,40 +3,67 @@ import "../styles/home.css";
 import Card from "../components/Card";
 
 const Home = () => {
-  const [speech] = useState(window.speechSynthesis);
-  const [isPaused, setIsPaused] = useState(false);
-  const [currentText, setCurrentText] = useState("");
+  // Définition des données pour les 3 cartes
+  const cardsData = [
+    {
+      width: "270px",
+      title: "Etablissement",
+      texts: [
+        "Nous présentons des établissements qui prennent en charge les personnes souffrant de handicap et d'exclusion sociale.",
+        "Certains établissements offrent des soins médicaux spécialisés.",
+        "D'autres proposent des formations adaptées pour l'insertion professionnelle."
+      ]
+    },
+    {
+      width: "270px",
+      title: "Offre d'emploi",
+      texts: [
+        "Nous offrons une liste d'emplois possibles pour les personnes handicapées cherchant du travail.",
+        "Les entreprises partenaires garantissent des conditions de travail adaptées.",
+        "Certaines offres concernent le télétravail pour plus de flexibilité."
+      ]
+    },
+    {
+      width: "270px",
+      title: "Activités diverses",
+      texts: [
+        "Les communautés de personnes handicapées proposent des activités en groupe diverses et libres pour tout le monde.",
+        "Les sports adaptés permettent de maintenir une bonne condition physique.",
+        "Des ateliers de création artistique sont également disponibles."
+      ]
+    }
+  ];
 
+  // Index de la carte active (celle dont le texte est lu)
+  const [activeCardIndex, setActiveCardIndex] = useState(0);
+  const [speech] = useState(window.speechSynthesis);
+
+  // Fonction pour lancer la lecture d'un texte
+  const speakText = (text) => {
+    speech.cancel(); // Stop toute lecture en cours
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "fr-FR"; // Voix en français
+    speech.speak(utterance);
+  };
+
+  // À chaque changement de carte active, lire la concaténation de ses textes
+  useEffect(() => {
+    const cardText = cardsData[activeCardIndex].texts.join(" ");
+    speakText(cardText);
+  }, [activeCardIndex, speech]);
+
+  // Gestion de la touche "F" pour passer à la carte suivante
   useEffect(() => {
     const handleKeyDown = (event) => {
-      if (event.code === "Space") {
-        event.preventDefault(); // Empêche le scroll
-
-        if (speech.speaking) {
-          if (isPaused) {
-            speech.resume();
-          } else {
-            speech.pause();
-          }
-          setIsPaused(!isPaused);
-        } else if (currentText) {
-          speakText(currentText);
-        }
+      if (event.code === "KeyF") {
+        event.preventDefault();
+        setActiveCardIndex((prev) => (prev + 1) % cardsData.length);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [speech, isPaused, currentText]);
-
-  const speakText = (text) => {
-    speech.cancel(); // Stop toute lecture en cours
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "fr-FR"; // Définit la langue en français
-    speech.speak(utterance);
-  };
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [cardsData.length]);
 
   return (
     <div className="home-container">
@@ -47,45 +74,15 @@ const Home = () => {
         </p>
       </div>
       <div className="card-home">
-        <Card
-          width="270px"
-          title="Etablissement"
-          text="Nous présentons des établissements qui prennent en charge les personnes souffrant de handicap et d'exclusion sociale."
-          onRead={() => {
-            setCurrentText(
-              "Nous présentons des établissements qui prennent en charge les personnes souffrant de handicap et d'exclusion sociale."
-            );
-            speakText(
-              "Nous présentons des établissements qui prennent en charge les personnes souffrant de handicap et d'exclusion sociale."
-            );
-          }}
-        />
-        <Card
-          width="270px"
-          title="Offre d'emploi"
-          text="Nous offrons une liste d'emplois possibles pour les personnes handicapées cherchant du travail."
-          onRead={() => {
-            setCurrentText(
-              "Nous offrons une liste d'emplois possibles pour les personnes handicapées cherchant du travail."
-            );
-            speakText(
-              "Nous offrons une liste d'emplois possibles pour les personnes handicapées cherchant du travail."
-            );
-          }}
-        />
-        <Card
-          width="270px"
-          title="Activités diverses"
-          text="Les communautés de personnes handicapées proposent des activités en groupe diverses et libres pour tout le monde."
-          onRead={() => {
-            setCurrentText(
-              "Les communautés de personnes handicapées proposent des activités en groupe diverses et libres pour tout le monde."
-            );
-            speakText(
-              "Les communautés de personnes handicapées proposent des activités en groupe diverses et libres pour tout le monde."
-            );
-          }}
-        />
+        {cardsData.map((card, index) => (
+          <Card
+            key={index}
+            width={card.width}
+            title={card.title}
+            texts={card.texts}
+            active={index === activeCardIndex} // Pour indiquer visuellement la carte active
+          />
+        ))}
       </div>
     </div>
   );

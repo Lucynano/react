@@ -1,11 +1,11 @@
 import React from "react";
+import SpeechButton from "./SpeechButton";
 
-const Card = ({ width, title, text, onRead }) => {
+const Card = ({ width, title, texts }) => {
   return (
     <div className="card" style={{ width }}>
       <h2 className="card-title">{title}</h2>
-      <p className="card-text">{text}</p>
-      <button className="read-button" onClick={onRead}>🔊 Lire</button>
+      <SpeechButton texts={texts} />
     </div>
   );
 };

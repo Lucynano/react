@@ -1,0 +1,45 @@
+.School {
+    width: 950px;
+    height: 160px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px #00000060;
+    display: flex;
+}
+.school_img {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.school_info {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+}
+.text {
+    height: 70%;
+    text-align: left;
+    padding-left: 20px;
+}
+.school_btn_div {
+    height: 30%;
+}
+span {
+    font-weight: bold;
+}
+.name { color: #196CBE;font-weight: bold; }
+.school_btn_div {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding-right: 20px;
+}
+.info_btn {
+    border-color: #196CBE;
+    color: #196CBE;
+}
+.school_avatar {
+    height: 120px;
+    width: 200px;
+    border-radius: 0;
+}
