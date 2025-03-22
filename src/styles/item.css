@@ -1,0 +1,10 @@
+.list-item {
+    background-color: #f0f0f0; /* Couleur de fond */
+    padding: 20px; /* Espacement intérieur */
+    margin: 10px; /* Espacement extérieur */
+    border-radius: 15px; /* Bordures arrondies */
+    font-size: 1.2em; /* Taille de la police */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    width: 80%; /* Largeur de l'élément */
+    max-width: 600px; /* Largeur maximale */
+  }

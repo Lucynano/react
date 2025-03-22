@@ -1,0 +1,39 @@
+.card {
+  padding: 20px;
+  background-color: whitesmoke;
+  border-radius: 10px;
+  border: none;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  box-shadow: 0 4px 8px rgba(107, 107, 107, 0.1);
+}
+
+/* Effet au survol */
+.card:hover {
+  transform: scale(1.1); /* Utiliser transform: scale() au lieu de scale: */
+  box-shadow: 0 8px 16px rgba(66, 65, 65, 0.2);
+}
+
+img {
+  width: 100%;
+  border-radius: 10px; /* Pour arrondir les bords de l'image aussi */
+}
+
+.card-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.card-text {
+  font-size: 15px;
+  color: #555;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
+}
+
+.card-footer {
+  margin: 30px;
+  border: none;
+  background: transparent;
+  text-align: center; /* Centrer le contenu dans le footer */
+}
